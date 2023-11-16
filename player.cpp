@@ -72,11 +72,11 @@ bool Player::operator>=(const Player& rhs) {
 	return !(firstName < rhs.getFirstName());
 }
 bool Player::operator==(string name) {
-	return (firstName == name);
+	return (this->firstName == name);
 }
 bool Player::operator<(string coun) {
 	return (this->country < coun);
 }
 bool Player::operator>(string name) {
-	return (name < firstName);
+	return (this->firstName > name);
 }
