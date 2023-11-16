@@ -11,6 +11,9 @@ public:
 	void display();
 	void add(Player aPlayer);
 	string getTeamName();
+	int getNumPlayers();
+	Player getPlayer(string first, string last);
+	void updatePlayerPoints(string first, string last, int extraPoints);
 private:
 	int mNumberOfPlayers;
 	vector <Player> *teamPlayers;
