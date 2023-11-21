@@ -65,13 +65,14 @@ int main() {
 		}
 		file >> p;
 		Player x(r, fN, lN, c, p);
-		x.display();
+		//x.display();
 		myPlayers.push_back(x);
 	}
 	cout << endl;
 	cout << "This is a check for after reading the players from the file \n";
 	cout << "The number of players is: " << myPlayers.size() << endl;
 	selectionSort(myPlayers);
+	cout << "These are all the players: " << endl;
 	for (int i = 0; i < myPlayers.size(); i++) {
 		myPlayers.at(i).display();
 	}
@@ -91,20 +92,17 @@ int main() {
 	}
 	cout << "The number of teams: " << allTeams.size() << endl;
 	cout << endl;
-	cout << "These are the teams: " << endl;
-	cout << endl;
-	for (int i = 0; i < allTeams.size(); i++) {
-		allTeams.at(i).display();
-	}
-	cout << "Select one: \n1. Display a team by country code \n";
+	cout << "Select one: \n0. Display all teams \n1. Display a team by country code \n";
 	cout << "2. Add points to a player using their name and country\n";
 	cout << "3. Test the Copy Constructor\n";
 	cout << "4. Test the Assignment Operator" << endl;
 	cout << "5. Quit" << endl;
 
 	int userInput;
-	string countryCode;
+	int extraPoints;
+	string countryCode1, countryCode3;
 	string fName, lName, coun;
+	string first, last;
 	cin >> userInput;
 	
 	//Things to work on:
@@ -112,26 +110,41 @@ int main() {
 	//Use switch cases for the userInput menu instead of using if-statements. Finally, ensure that you ask the user for input in a loop and they choose a menu option to quit.
 	
 	while (userInput != 5) {
-		if (userInput < 1 || userInput > 5) {
+		if (userInput < 0 || userInput > 5) {
 			cout << "Please provide a valid selection: ";
 			cin >> userInput;
 		}
 		switch (userInput) {
 
+		case(0):
+			cout << "These are all the teams: " << endl;
+			cout << endl;
+			for (int i = 0; i < allTeams.size(); i++) {
+				allTeams.at(i).display();
+			}
+			cout << "Choose a new selection: " << endl;
+			cout << "Select one: \n0. Display all teams \n1. Display a team by country code \n";
+			cout << "2. Add points to a player using their name and country\n";
+			cout << "3. Test the Copy Constructor\n";
+			cout << "4. Test the Assignment Operator" << endl;
+			cout << "5. Quit" << endl;
+			cin >> userInput;
+			break;
+
 		case (1):
 			cout << "Please provide the country code in all caps: ";
-			cin >> countryCode;
+			cin >> countryCode1;
 			for (int i = 0; i < allTeams.size(); i++) {
-				if (allTeams.at(i).getTeamName() == countryCode) {
+				if (allTeams.at(i).getTeamName() == countryCode1) {
 					allTeams.at(i).display();
 					break;
 				}
-				if ((i == (allTeams.size() - 1)) && (allTeams.at(i).getTeamName() != countryCode)) {
+				if ((i == (allTeams.size() - 1)) && (allTeams.at(i).getTeamName() != countryCode1)) {
 					cout << "Invalid Country" << endl;
 				}
 			}
 			cout << "Choose a new selection: " << endl;
-			cout << "Select one: \n1. Display a team by country code \n";
+			cout << "Select one: \n0. Display all teams \n1. Display a team by country code \n";
 			cout << "2. Add points to a player using their name and country\n";
 			cout << "3. Test the Copy Constructor\n";
 			cout << "4. Test the Assignment Operator" << endl;
@@ -149,13 +162,12 @@ int main() {
 				if (allTeams.at(i).getTeamName() == coun) {
 					allTeams.at(i).getPlayer(fName, lName).display();
 					cout << "How many points do you want to add to this player? ";
-					int extraPoints;
 					cin >> extraPoints;
 					allTeams.at(i).updatePlayerPoints(fName, lName, extraPoints);
 					allTeams.at(i).getPlayer(fName, lName).display();
 				}
 			}
-			cout << "Choose a new selection: " << endl;
+			cout << "Select one: \n0. Display all teams \n1. Display a team by country code \n";
 			cout << "Select one: \n1. Display a team by country code \n";
 			cout << "2. Add points to a player using their name and country\n";
 			cout << "3. Test the Copy Constructor\n";
@@ -164,12 +176,37 @@ int main() {
 			cin >> userInput;
 			break;
 		case (3):
-			cout << "Which country do you want to create a copy of?: ";
-			cin >> countryCode;
+			cout << "These are the countries: " << endl;
+			for (int i = 0; i < allTeams.size(); i++) {
+				cout << allTeams.at(i).getTeamName() << " | ";
+			}
+			cout << endl;
+			cout << "Which country do you want to make a copy of? ";
+			cin >> countryCode3;
+			for (int i = 0; i < allTeams.size(); i++) {
+				if (allTeams.at(i).getTeamName() == countryCode3) {
+					Team copyTeam(allTeams.at(i));
+					cout << "This is the copy team: " << endl;
+					copyTeam.display();
+					cout << "To test our copy, let's add points to one of the players in this team and compare" << endl;
+					cout << "Provide the first name of the player you want to add points to: ";
+					cin >> first;
+					cout << "Provide the last name of the player you want to add points to: ";
+					cin >> last;
+					cout << "How many extra points do you want to add? " << endl;
+					cin >> extraPoints;
+					allTeams.at(i).updatePlayerPoints(first, last, extraPoints);
+					cout << "This is the copied team: " << endl;
+					copyTeam.display();
+					cout << "This is the original team with our updated player: " << endl;
+					allTeams.at(i).display();
+					break;
+				}
+			}
 
 
 			cout << "Choose a new selection: " << endl;
-			cout << "Select one: \n1. Display a team by country code \n";
+			cout << "Select one: \n0. Display all teams \n1. Display a team by country code \n";
 			cout << "2. Add points to a player using their name and country\n";
 			cout << "3. Test the Copy Constructor\n";
 			cout << "4. Test the Assignment Operator" << endl;
@@ -177,9 +214,37 @@ int main() {
 			cin >> userInput;
 			break;
 		case (4):
+			Team newTeam;
+			cout << "These are the countries: " << endl;
+			for (int i = 0; i < allTeams.size(); i++) {
+				cout << allTeams.at(i).getTeamName() << " | ";
+			}
+			cout << endl;
+			cout << "Which country do you want to the new team to be equal to? ";
+			cin >> countryCode3;
+			for (int i = 0; i < allTeams.size(); i++) {
+				if (allTeams.at(i).getTeamName() == countryCode3) {
+					newTeam = allTeams.at(i);
+					cout << "This is the assigned team: " << endl;
+					newTeam.display();
+					cout << "To test our assignment, let's add points to one of the players in this team and compare" << endl;
+					cout << "Provide the first name of the player you want to add points to: ";
+					cin >> first;
+					cout << "Provide the last name of the player you want to add points to: ";
+					cin >> last;
+					cout << "How many extra points do you want to add? " << endl;
+					cin >> extraPoints;
+					allTeams.at(i).updatePlayerPoints(first, last, extraPoints);
+					cout << "This is the assigned team: " << endl;
+					newTeam.display();
+					cout << "This is the original team with our updated player: " << endl;
+					allTeams.at(i).display();
+					break;
+				}
+			}
 
 			cout << "Choose a new selection: " << endl;
-			cout << "Select one: \n1. Display a team by country code \n";
+			cout << "Select one: \n0. Display all teams \n1. Display a team by country code \n";
 			cout << "2. Add points to a player using their name and country\n";
 			cout << "3. Test the Copy Constructor\n";
 			cout << "4. Test the Assignment Operator" << endl;
