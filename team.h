@@ -11,10 +11,12 @@ public:
 	Team(const Team& rhs);
 	void display();
 	void add(Player aPlayer);
-	string getTeamName();
-	int getNumPlayers();
+	const string getTeamName();
+	const int getNumPlayers();
 	Player getPlayer(string first, string last);
 	void updatePlayerPoints(string first, string last, int extraPoints);
+	~Team();
+	Team& operator=(const Team& rhs);
 private:
 	int mNumberOfPlayers;
 	vector <Player> *teamPlayers;
