@@ -8,6 +8,7 @@ class Team {
 public:
 	Team(string country);
 	Team();
+	Team(const Team& rhs);
 	void display();
 	void add(Player aPlayer);
 	string getTeamName();
