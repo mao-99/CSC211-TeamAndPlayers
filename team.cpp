@@ -7,6 +7,14 @@ Team::Team() {
 	this->mCountry = "NONE";
 	this->teamPlayers = new vector <Player>;
 }
+Team::Team(const Team& rhs) {
+	this->mNumberOfPlayers = rhs.mNumberOfPlayers;
+	this->mCountry = rhs.mCountry;
+	this->teamPlayers = new vector <Player>;
+	for (int i = 0; i < rhs.teamPlayers->size(); i++) {
+		this->teamPlayers->push_back(rhs.teamPlayers->at(i));
+	}
+}
 Team::Team(string country) {
 	this->mCountry = country;
 	this->teamPlayers = new vector <Player>;
