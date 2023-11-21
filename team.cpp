@@ -31,10 +31,10 @@ void Team::display() {
 	}
 	cout << endl;
 }
-string Team::getTeamName() {
+const string Team::getTeamName() {
 	return this->mCountry;
 }
-int Team::getNumPlayers() {
+const int Team::getNumPlayers() {
 	return this->mNumberOfPlayers;
 }
 Player Team::getPlayer(string first, string last) {
@@ -51,4 +51,21 @@ void Team::updatePlayerPoints(string first, string last, int extraPoints) {
 			this->teamPlayers->at(i).setPoints(originalPoints + extraPoints);
 		}
 	}
+}
+
+Team& Team::operator=(const Team& rhs) {
+	if (this != &rhs) {
+		this->mCountry = rhs.mCountry;
+		delete this->teamPlayers;
+		this->teamPlayers = new vector <Player>;
+		for (int i = 0; i < rhs.teamPlayers->size(); i++) {
+			this->teamPlayers->push_back(rhs.teamPlayers->at(i));
+		}
+		this->mNumberOfPlayers = this->teamPlayers->size();
+	}
+	return *this;
+}
+
+Team::~Team() {
+	delete this->teamPlayers;
 }
